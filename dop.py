@@ -1,4 +1,3 @@
-from turtle import color
 import discord
 from ast import Delete
 from discord.ext import commands
