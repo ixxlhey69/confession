@@ -13,7 +13,7 @@ import string
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
 
 code = {}
-conf_channel = (990358106389217293, 1001140755269681273)
+conf_channel = 1093103560742412308        #990358106389217293, 1001140755269681273
 rmv_channel = 990360126147919932
 
 bot.remove_command('help')
@@ -46,6 +46,7 @@ async def on_guild_join(guild):
         break
 
 @bot.command()
+@commands.cooldown(1, 30, commands.BucketType.default)
 async def confess( ctx, *, confession: str):
     if isinstance(ctx.channel, discord.channel.DMChannel):
         colors = (0x071932, 0x082540, 0x023C4D, 0x0D4848, 0x032D39)
@@ -53,46 +54,46 @@ async def confess( ctx, *, confession: str):
         embed = discord.Embed(color = random.choice(colors))
         embed.title = f"Confession ID {code}"
         embed.description = confession
-        for i in range(len(conf_channel)):
-          channel = bot.get_channel(conf_channel[i])
-          confession_msg = await channel.send(embed=embed)
-        code[code] = confession_msg.id
+        #for i in range(len(conf_channel)):
+        #  channel = bot.get_channel(conf_channel[i])
+        #  confession_msg = await channel.send(embed=embed)
+        #code[code] = 
+        channel = bot.get_channel(conf_channel)
+        await channel.send(embed=embed)
         
         await ctx.send(f'Your confession ID is {code}')
-        await ctx.send("If you want to remove the confession from the channel do .request (ID number) and I'll notify the admins to take it off.", delete_after=10)
+        await ctx.send("If you want to remove the confession from the channel do .request (ID number) and I'll notify the admins to take it off.")
 
     else:
         await ctx.send("This command only works in my dms!")
 
 @bot.command(aliases=["rq"])
-async def request(ctx, code=None):
-    rmv_channel = bot.get_channel(rmv_channel)
-    conf_channel = bot.get_channel(conf_channel)
+async def request(ctx, *, code : str=None):
+    #rmv_channel = 990360126147919932
+    #conf_channel = 990358106389217293
+    
+    rmv_channel2 = bot.get_channel(990360126147919932)
 
-    """"TO Avoid Fake codes being sent!"""
     if code == None:
         await ctx.send("Please enter confession code", delete_after=10)
 
-    confession = await conf_channel.fetch_message(code[code])
+    else:
 
-    if not confession:
-        await ctx.send("Please enter the correct ID", delete_after=10)
+        await rmv_channel2.send(f"Please remove confession {code}")
 
-    await rmv_channel.send(f"Please remove confession {code}")
-
-@bot.command(aliases=["removeconfession"])
-async def rc( ctx, code : str=None ):
-    conf_channel = bot.get_channel(conf_channel)
-    
-    if code == None:
-        await ctx.send("Please enter confession code", delete_after=10)
-
-    confession = await conf_channel.fetch_message(code[code])
-
-    if not confession:
-        await ctx.send("Please enter the correct ID", delete_after=5)
-    
-    await ctx.message.delete()
-    await confession.delete()
+#@bot.command(aliases=["removeconfession"])
+#async def rc( ctx, code : str=None ):
+#    conf_channel = 990358106389217293
+#    
+#    if code == None:
+#        await ctx.send("Please enter confession code", delete_after=10)
+#
+#    confession = await conf_channel.fetch_message(code[code])
+#
+#    if not confession:
+#        await ctx.send("Please enter the correct ID", delete_after=5)
+#    
+#    await ctx.message.delete()
+#    await confession.delete()
 
 bot.run('MTAwMTA4MTc0NjkxMTE0MTk2OA.GBlAG9.6FGiBDDcHYSEv57LXJjfvO0XDTpYAuIO-sd9l0')
