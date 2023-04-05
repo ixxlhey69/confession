@@ -10,7 +10,7 @@ import random
 import string
 
 
-bot = commands.Bot(command_prefix='!')
+bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
 
 code = {}
 conf_channel = (990358106389217293, 1001140755269681273)
@@ -36,6 +36,7 @@ def gen_key():
 @bot.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
+    await bot.change_presence(activity=discord.Game(name="Use !confess in my dms."))
 
 @bot.event
 async def on_guild_join(guild):
@@ -93,20 +94,5 @@ async def rc( ctx, code : str=None ):
     
     await ctx.message.delete()
     await confession.delete()
-
-async def ch_pr():
-    await bot.wait_until_ready()
-    
-    statuses = ["Listening to your confessions", "Use !confess",]
-
-    while not bot.is_closed():
-
-        status = random.choice(statuses)
-
-        await bot.change_presence(activity=discord.Game(name=status))
-        
-        await asyncio.sleep(5)
-
-bot.loop.create_task(ch_pr())
 
 bot.run('MTAwMTA4MTc0NjkxMTE0MTk2OA.GBlAG9.6FGiBDDcHYSEv57LXJjfvO0XDTpYAuIO-sd9l0')
