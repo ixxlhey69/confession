@@ -96,4 +96,4 @@ async def request(ctx, *, code : str=None):
 #    await ctx.message.delete()
 #    await confession.delete()
 
-bot.run('MTAwMTA4MTc0NjkxMTE0MTk2OA.GBlAG9.6FGiBDDcHYSEv57LXJjfvO0XDTpYAuIO-sd9l0')
+bot.run('MTAwMTA4MTc0NjkxMTE0MTk2OA.GIAept.6-Ziv5Oe7yUjFngB3dWDRV2rqWKuQPPPcCFvH0')
